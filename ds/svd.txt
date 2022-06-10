@@ -1,0 +1,41 @@
+X, y = load_digits(return_X_y=True) 
+X.shape
+y
+image=X[0]
+image = image.reshape((8, 8)) 
+plt.matshow(image, cmap = 'gray') 
+U, s, V = np. linalg.svd(image) 
+S = np.zeros((image.shape [0], image.shape[1])) 
+S 
+S[:image. shape[0], :image.shape[0]] = np.diag(s) 
+n_component = 2 
+S
+S = S[:, :n_component] 
+S
+VT = V[:n_component, :] 
+VT 
+A = U.dot(S.dot(VT))
+print(A)
+
+plt.matshow(A) 
+U.dot(S)
+rf_original =RandomForestClassifier(oob_score=True) 
+rf_original.fit(X, y)
+rf_original.oob_score_ 
+svd = TruncatedSVD(n_components=2) 
+X_reduced = svd.fit_transform(X) 
+X_reduced[0] 
+image_reduced = svd.inverse_transform(X_reduced[0].reshape(1,-1))
+image_reduced = image_reduced.reshape((8,8)) 
+plt.matshow(image_reduced, cmap = 'gray') 
+
+rf_reduced = RandomForestClassifier(oob_score=True) 
+rf_reduced.fit(X_reduced, y)
+rf_reduced.oob_score_ 
+svd.explained_variance_ratio_. sum() 
+svd = TruncatedSVD(n_components=16) 
+X_reduced = svd.fit_transform(X) 
+svd.explained_variance_ratio_.sum()
+rf_reduced = RandomForestClassifier(oob_score=True) 
+rf_reduced.fit(X_reduced, y) 
+rf_reduced.oob_score_ 

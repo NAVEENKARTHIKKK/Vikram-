@@ -1,0 +1,24 @@
+import pandas as pd
+df= pd.read_csv('E:\\6th Sem\DATA SCIENCE\log.csv')
+df.head(5)
+df.groupby('left').mean()
+import matplotlib.pyplot as plt
+pd.crosstab(df.salary,df.left)
+pd.crosstab(df.salary,df.left).plot(kind='bar')
+pd.crosstab(df.Department,df.left).plot(kind='bar')
+df1 = df[['satisfaction_level','average_montly_hours','promotion_last_5years','salary']]
+df1.head()
+dummies = pd.get_dummies(df1.salary,prefix= "salary")
+df_dummies = pd.concat([df1,dummies],axis='columns')
+df_dummies
+df_dummies=df_dummies.drop(['salary','salary_high'],axis='columns')
+df_dummies.head()
+x = df_dummies
+y = df.left
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2)
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+model.fit(x_train,y_train)
+model.predict(x_test)
+model.score(x_test,y_test)

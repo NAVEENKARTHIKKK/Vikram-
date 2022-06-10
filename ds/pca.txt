@@ -1,0 +1,29 @@
+#import packages
+import numpy as np
+X=np.random.randint(10,90,100).reshape(20,5)
+print(X)
+X_meaned=X-np.mean(X,axis=0)
+X_meaned
+#calculate the covariance matrix of the mean-centred data
+cov_matrix=np.cov(X_meaned,rowvar=False)
+cov_matrix
+#Eigenvalues and Eigenvectors of the covariance matrix
+eigen_values,eigen_vectors=np.linalg.eigh(cov_matrix)
+eigen_values
+eigen_vectors
+sorted_index=np.argsort(eigen_values)[::-1]
+sorted_index
+#Sort the eigenvectors in descending order
+sorted_eigenvectors=eigen_vectors[:,sorted_index]
+sorted_eigenvectors
+#Sort the eigenvalues in descending order
+sorted_eigenvalue=eigen_values[sorted_index]
+sorted_eigenvalue
+#select the first n eigenvectors,n is desired dimension of our final reduced data
+n=2
+eigenvector_subset=sorted_eigenvectors[:,0:n]
+eigenvector_subset
+#Transform the data
+X_reduced =np.dot(eigenvector_subset.transpose(),X_meaned.transpose()).transpose()
+#Reduced dimension (20,5)-->(20,2)
+X_reduced
